@@ -2,6 +2,22 @@ import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
 import './Person/Person.css';
+import styled from 'styled-components';
+
+const StyledButton = styled.button`
+  background-color: ${props => props.alt ? 'red' : 'green'};
+  color: white;
+  font: inherit;
+  border: 1px solid blue;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 8px;
+
+  &:hover {
+    background-color: lightgreen;
+    color: black;
+  }
+`;
 
 class App extends Component {
   state = {
@@ -43,6 +59,8 @@ class App extends Component {
   }
 
   render() {
+    const style = {
+    }
 
     let persons = null;
 
@@ -58,13 +76,27 @@ class App extends Component {
               changed={(event) => this.nameChangedHandler(event, person.id)} />
           })}
         </div>
-      )
+      );
+
+      style.backgroundColor = 'red';
+    }
+
+    const classes = [];
+    if (this.state.persons.length <= 2) {
+      classes.push('red');
+    }
+    if (this.state.persons.length <= 1) {
+      classes.push('bold')
     }
 
     return (
       <div className="App">
           <h1>Hi I'm a react app</h1>
-          <button onClick={this.togglePersonsHandler}>Toggle</button>
+          <p className={classes.join(' ')}>This is a paragraph</p>
+          <StyledButton
+            alt={this.state.showPersons}
+            onClick={this.togglePersonsHandler}> Toggle
+          </StyledButton>
           {persons}
       </div>
     );
